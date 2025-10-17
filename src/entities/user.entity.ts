@@ -14,7 +14,7 @@ export class User {
     @Column({ nullable: true, unique: true })
     username: string
 
-    @Column()
+    @Column({ default: false })
     freeKeyUsed: boolean
 
     @CreateDateColumn()

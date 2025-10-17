@@ -1,11 +1,14 @@
 import { AppDataSource } from './data-source'
 import * as express from 'express'
 import * as dotenv from 'dotenv'
+import userRoutes from './routes/user.routes'
 
 dotenv.config()
 
 const app = express()
 app.use(express.json())
+
+app.use('/users', userRoutes)
 
 AppDataSource.initialize()
     .then(async () => {

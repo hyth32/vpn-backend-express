@@ -1,4 +1,12 @@
-import { Entity, PrimaryGeneratedColumn, Column, CreateDateColumn, UpdateDateColumn } from 'typeorm'
+import {
+    Entity,
+    PrimaryGeneratedColumn,
+    Column,
+    CreateDateColumn,
+    UpdateDateColumn,
+    OneToMany,
+} from 'typeorm'
+import { Order } from './order.entity'
 
 @Entity()
 export class User {
@@ -16,6 +24,9 @@ export class User {
 
     @Column({ default: false })
     freeKeyUsed: boolean
+
+    @OneToMany(() => Order, order => order.user)
+    orders: Order[]
 
     @CreateDateColumn()
     createdAt: Date

@@ -1,4 +1,4 @@
-import { Price } from '../entities/price.entity'
+import { GetPriceQueryDto } from '../dto/price/get.dto'
 import { PriceService } from '../services/price.service'
 import { Request, Response } from 'express'
 
@@ -6,8 +6,8 @@ const priceService = new PriceService()
 
 export const getPrice = async (req: Request, res: Response) => {
     try {
-        const { regionId, periodId } = req.query
-        const price = (await priceService.getPrice(regionId as string, periodId as string)) as Price
+        const dto = req.query as unknown as GetPriceQueryDto
+        const price = await priceService.getPrice(dto)
         return res.status(200).json({
             quantity: price.keyCount,
             price: price.amount,

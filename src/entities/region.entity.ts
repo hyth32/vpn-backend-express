@@ -19,13 +19,13 @@ export class Region {
     name: string
 
     @Column({ nullable: true })
-    flag: string
-
-    @Column({ nullable: true })
     host: string
 
     @Column({ nullable: true })
     port: string
+
+    @Column({ default: true })
+    available: boolean
 
     @OneToMany(() => Order, order => order.region)
     orders: Order[]

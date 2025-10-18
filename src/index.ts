@@ -5,6 +5,7 @@ import userRoutes from './routes/user.routes'
 import periodRoutes from './routes/period.routes'
 import regionRoutes from './routes/region.routes'
 import priceRoutes from './routes/price.routes'
+import keyRoutes from './routes/key.routes'
 
 dotenv.config()
 
@@ -15,6 +16,7 @@ app.use('/users', userRoutes)
 app.use('/periods', periodRoutes)
 app.use('/regions', regionRoutes)
 app.use('/prices', priceRoutes)
+app.use('/keys', keyRoutes)
 
 AppDataSource.initialize()
     .then(async () => {

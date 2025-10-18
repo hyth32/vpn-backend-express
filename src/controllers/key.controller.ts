@@ -1,14 +1,13 @@
-import { userRepository } from '../repositories/user.repository'
 import { KeyService } from '../services/key.service'
 import { Request, Response } from 'express'
+import { GetKeysQueryDto } from '../dto/key/get.dto'
 
 const keyService = new KeyService()
 
 export const getKeys = async (req: Request, res: Response) => {
     try {
-        const { telegramId, offset = 0, limit = 10 } = req.query
-        const userId = await userRepository.getIdFromTelegramId(telegramId as string)
-        const keys = await keyService.getAll(userId, offset as number, limit as number)
+        const dto = req.query as unknown as GetKeysQueryDto
+        const keys = await keyService.getAll(dto)
         return res.status(200).json({
             total: keys.total,
             keys: keys.items.map(key => ({

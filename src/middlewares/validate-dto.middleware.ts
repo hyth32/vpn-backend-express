@@ -32,9 +32,13 @@ export const validateDto = <T extends object>(
         }
 
         if (source === 'query') {
-            req.query = dtoObject as any
+            const target = req.query as any
+            Object.keys(target).forEach(k => delete target[k])
+            Object.assign(target, dtoObject)
         } else if (source === 'params') {
-            req.params = dtoObject as any
+            const target = req.params as any
+            Object.keys(target).forEach(k => delete target[k])
+            Object.assign(target, dtoObject)
         } else {
             req.body = dtoObject
         }

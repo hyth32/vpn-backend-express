@@ -1,8 +1,12 @@
 import { plainToInstance } from 'class-transformer'
 import { validate } from 'class-validator'
 import { Request, Response, NextFunction } from 'express'
+import { DtoClassType } from '../types/dto.type'
 
-export const validateDto = (DtoClass: any, source: 'body' | 'query' | 'params' = 'body') => {
+export const validateDto = <T extends object>(
+    DtoClass: DtoClassType<T>,
+    source: 'body' | 'query' | 'params' = 'body'
+) => {
     return async (req: Request, res: Response, next: NextFunction) => {
         const sourceObject =
             source === 'query'
@@ -10,6 +14,7 @@ export const validateDto = (DtoClass: any, source: 'body' | 'query' | 'params' =
                 : source === 'params'
                   ? (req.params as any)
                   : req.body
+
         const dtoObject = plainToInstance(DtoClass, sourceObject)
         const errors = await validate(dtoObject, {
             whitelist: true,
@@ -19,8 +24,8 @@ export const validateDto = (DtoClass: any, source: 'body' | 'query' | 'params' =
         if (errors.length > 0) {
             return res.status(400).json({
                 errors: errors.map(error => ({
+                    source,
                     property: error.property,
-                    source: source,
                     constraints: error.constraints,
                 })),
             })
@@ -33,6 +38,7 @@ export const validateDto = (DtoClass: any, source: 'body' | 'query' | 'params' =
         } else {
             req.body = dtoObject
         }
+
         next()
     }
 }

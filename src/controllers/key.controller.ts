@@ -1,13 +1,13 @@
 import { KeyService } from '../services/key.service'
-import { Request, Response } from 'express'
+import { Response } from 'express'
 import { GetKeysQueryDto } from '../dto/key/get.dto'
+import { TypedRequestQuery } from '../types/request.type'
 
 const keyService = new KeyService()
 
-export const getKeys = async (req: Request, res: Response) => {
+export const getKeys = async (req: TypedRequestQuery<GetKeysQueryDto>, res: Response) => {
     try {
-        const dto = req.query as unknown as GetKeysQueryDto
-        const keys = await keyService.getAll(dto)
+        const keys = await keyService.getAll(req.query)
         return res.status(200).json({
             total: keys.total,
             keys: keys.items.map(key => ({

@@ -1,13 +1,13 @@
 import { CreateUserDto } from '../dto/user/create.dto'
 import { UserService } from '../services/user.service'
-import { Request, Response } from 'express'
+import { Response } from 'express'
+import { TypedRequestBody } from '../types/request.type'
 
 const userService = new UserService()
 
-export const createUser = async (req: Request, res: Response) => {
+export const createUser = async (req: TypedRequestBody<CreateUserDto>, res: Response) => {
     try {
-        const dto = req.body as CreateUserDto
-        const user = await userService.createUser(dto)
+        const user = await userService.createUser(req.body)
         res.status(201).json(user)
     } catch (error) {
         res.status(500).json({ error: error.message })

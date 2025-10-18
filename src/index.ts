@@ -2,6 +2,7 @@ import { AppDataSource } from './data-source'
 import * as express from 'express'
 import * as dotenv from 'dotenv'
 import userRoutes from './routes/user.routes'
+import periodRoutes from './routes/period.routes'
 
 dotenv.config()
 
@@ -9,6 +10,7 @@ const app = express()
 app.use(express.json())
 
 app.use('/users', userRoutes)
+app.use('/periods', periodRoutes)
 
 AppDataSource.initialize()
     .then(async () => {

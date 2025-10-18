@@ -14,4 +14,8 @@ export class KeyService {
 
         return { total, items }
     }
+
+    async show(keyId: string): Promise<Key> {
+        return keyRepository.findOneByOrFail({ id: keyId })
+    }
 }

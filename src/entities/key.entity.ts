@@ -34,4 +34,14 @@ export class Key {
 
     @DeleteDateColumn()
     deletedAt?: Date
+
+    isExpired(): boolean {
+        const currentDate = new Date()
+        return this.expirationDate <= currentDate
+    }
+
+    isFree(): boolean {
+        const freeKeyId = this.order?.freeKey?.id
+        return !!freeKeyId && freeKeyId === this.id
+    }
 }

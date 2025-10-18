@@ -26,9 +26,6 @@ export class Price {
     @ManyToOne(() => Period)
     period: Period
 
-    @Column('float', { nullable: true })
-    discount: number
-
     @CreateDateColumn()
     createdAt: Date
 

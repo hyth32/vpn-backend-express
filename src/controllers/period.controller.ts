@@ -1,3 +1,4 @@
+import { Period } from '../entities/period.entity'
 import { PeriodService } from '../services/period.service'
 import { Request, Response } from 'express'
 
@@ -8,9 +9,10 @@ export const getPeriods = async (req: Request, res: Response) => {
         const { telegramId } = req.query
         const periods = await periodService.getAll(telegramId as string)
         return res.status(200).json(
-            periods.map(period => ({
+            periods.map((period: Period) => ({
                 id: period.id,
                 name: period.name,
+                discount: period.discount,
             }))
         )
     } catch (error) {

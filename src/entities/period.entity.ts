@@ -21,6 +21,9 @@ export class Period {
     @Column('float')
     value: number
 
+    @Column('float', { nullable: true })
+    discount: number
+
     @OneToMany(() => Price, price => price.period)
     prices: Price[]
 

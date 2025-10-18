@@ -5,7 +5,8 @@ const periodService = new PeriodService()
 
 export const getPeriods = async (req: Request, res: Response) => {
     try {
-        const periods = await periodService.getAll()
+        const { telegramId } = req.query
+        const periods = await periodService.getAll(telegramId as string)
         return res.status(200).json(
             periods.map(period => ({
                 id: period.id,
